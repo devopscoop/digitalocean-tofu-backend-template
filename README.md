@@ -116,3 +116,13 @@ skim: `git log` the new commits after pulling.
 - `region = "us-east-1"` in the backend block is a dummy value the s3
   backend requires; Spaces ignores it. The real region lives in the
   endpoint URL.
+
+## TODO
+
+- **Cross-region redundancy.** The state lives in one Spaces region,
+  and Spaces has no bucket replication, so losing that region takes the
+  state with it. Compliance scanners that require cross-region backups
+  will flag it. The AWS and Azure templates replicate to a second region
+  (an S3 replica bucket and GZRS, respectively). A likely fix here is a
+  scheduled job that copies the bucket to a Spaces bucket in another
+  region (e.g. `rclone sync`).
